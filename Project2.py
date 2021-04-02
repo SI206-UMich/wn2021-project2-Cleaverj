@@ -39,8 +39,18 @@ def get_search_links():
     “https://www.goodreads.com/book/show/kdkd".
 
     """
-
-    pass
+    url = "https://www.goodreads.com/search?q=fantasy&qid=NwUsLiA2Nc"
+    r = requests.get(url)
+    if r.ok:
+        soup = BeautifulSoup(r.content, 'html.parser')
+    anchor = soup.find_all('tr')
+    empty_list = []
+    for item in anchor:
+        anchor2 = item.find('a', class_ = 'bookTitle')
+        partial_url = anchor2['href']
+        full_url = 'https://www.goodreads.com' + partial_url
+        empty_list.append(full_url)
+    return empty_list[:10]
 
 
 def get_book_summary(book_url):
