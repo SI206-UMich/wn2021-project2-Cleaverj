@@ -14,9 +14,17 @@ def get_titles_from_search_results(filename):
 
     [('Book title 1', 'Author 1'), ('Book title 2', 'Author 2')...]
     """
-
-    pass
-
+    with open(filename, 'r') as f:
+        fil = f.read()
+    soup = BeautifulSoup(fil, 'html.parser')
+    anchor = soup.find_all('tr')
+    empty_list = []
+    for item in anchor:
+        anchor2 = item.find('a', class_ = 'bookTitle')
+        anchor3 = item.find('a', class_ = 'authorName')
+        tup = (anchor2.get_text().strip(), anchor3.get_text().strip())
+        empty_list.append(tup)
+    return empty_list
 
 def get_search_links():
     """
@@ -115,6 +123,7 @@ class TestCases(unittest.TestCase):
         # check that the first book and author tuple is correct (open search_results.htm and find it)
 
         # check that the last title is correct (open search_results.htm and find it)
+        
 
     def test_get_search_links(self):
         # check that TestCases.search_urls is a list
@@ -124,6 +133,7 @@ class TestCases(unittest.TestCase):
 
         # check that each URL in the TestCases.search_urls is a string
         # check that each URL contains the correct url for Goodreads.com followed by /book/show/
+        pass
 
 
     def test_get_book_summary(self):
@@ -141,6 +151,7 @@ class TestCases(unittest.TestCase):
             # check that the third element in the tuple, i.e. pages is an int
 
             # check that the first book in the search has 337 pages
+            pass
 
 
     def test_summarize_best_books(self):
@@ -155,6 +166,7 @@ class TestCases(unittest.TestCase):
         # check that the first tuple is made up of the following 3 strings:'Fiction', "The Midnight Library", 'https://www.goodreads.com/choiceawards/best-fiction-books-2020'
 
         # check that the last tuple is made up of the following 3 strings: 'Picture Books', 'Antiracist Baby', 'https://www.goodreads.com/choiceawards/best-picture-books-2020'
+        pass
 
 
     def test_write_csv(self):
@@ -172,6 +184,7 @@ class TestCases(unittest.TestCase):
         # check that the next row is 'Harry Potter and the Deathly Hallows (Harry Potter, #7)', 'J.K. Rowling'
 
         # check that the last row is 'Harry Potter: The Prequel (Harry Potter, #0.5)', 'J.K. Rowling'
+        pass
 
 
 
