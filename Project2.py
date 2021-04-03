@@ -66,6 +66,7 @@ def get_book_summary(book_url):
     You can easily capture CSS selectors with your browser's inspector window.
     Make sure to strip() any newlines from the book title and number of pages.
     """
+    r = requests.get(book_url)
     if r.ok:
         soup = BeautifulSoup(r.content, 'html.parser')
     anchor = soup.find('div', class_ = 'last col')
@@ -96,6 +97,21 @@ def summarize_best_books(filepath):
     ("Fiction", "The Testaments (The Handmaid's Tale, #2)", "https://www.goodreads.com/choiceawards/best-fiction-books-2020") 
     to your list of tuples.
     """
+    with open(filepath, 'r', encoding='utf-8') as f:
+        fil = f.read()
+    soup = BeautifulSoup(fil, 'html.parser')
+    anchor = soup.find_all('div', class_ = 'category clearFix')
+    final_list = []
+    for item in anchor:
+        anchor2 = item.find('a')['href']
+        anchor3 = item.find('h4')
+        anchor4 = item.find('img')['alt']
+        url = anchor2
+        genre = anchor3.get_text().strip()
+        title = anchor4
+        tup = (genre, title, url)
+        final_list.append(tup)
+    return final_list
     pass
 
 
