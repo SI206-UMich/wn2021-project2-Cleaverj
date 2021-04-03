@@ -135,7 +135,14 @@ def write_csv(data, filename):
 
     This function should not return anything.
     """
-    pass
+    with open(filename, 'w', encoding='UTF8', newline='') as f:
+        george = csv.writer(f)
+        header = ['Book title', 'Author Name']
+        george.writerow(header)
+        for item in data:
+            row = [item(0), item(1)]
+            george.writerow(row)
+    
 
 
 def extra_credit(filepath):
@@ -150,7 +157,7 @@ def extra_credit(filepath):
 class TestCases(unittest.TestCase):
 
     # call get_search_links() and save it to a static variable: search_urls
-
+    search_urls = 
 
     def test_get_titles_from_search_results(self):
         # call get_titles_from_search_results() on search_results.htm and save to a local variable
